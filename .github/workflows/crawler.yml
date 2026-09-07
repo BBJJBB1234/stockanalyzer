@@ -1,0 +1,69 @@
+name: Global Exchanges Cloud Crawler
+
+on:
+  schedule:
+    - cron: '0 * * * *' # รันอัตโนมัติทุกๆ 1 ชั่วโมง
+  workflow_dispatch: # กดสั่งรัน Manual เองได้ตลอดเวลาผ่านปุ่มใน GitHub
+
+jobs:
+  crawl-and-update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Scraping Dependencies
+        run: |
+          npm install axios cheerio
+
+      - name: Execute Cloud Crawler Script
+        run: |
+          node -e '
+          const fs = require("fs");
+          const axios = require("axios");
+
+          const targets = [
+            { id: "NYSE", name: "New York Stock Exchange", url: "https://www.nyse.com" },
+            { id: "NASDAQ", name: "Nasdaq", url: "https://www.nasdaq.com" },
+            { id: "SSE", name: "Shanghai Stock Exchange", url: "http://www.sse.com.cn" },
+            { id: "SZSE", name: "Shenzhen Stock Exchange", url: "http://www.szse.cn" },
+            { id: "JPX", name: "Japan Exchange Group", url: "https://www.jpx.co.jp/english/" },
+            { id: "NSE", name: "National Stock Exchange of India", url: "https://www.nseindia.com" },
+            { id: "BSE", name: "Bombay Stock Exchange", url: "https://www.bseindia.com" },
+            { id: "LSE", name: "London Stock Exchange", url: "https://www.londonstockexchange.com" },
+            { id: "HKEX", name: "Hong Kong Exchanges", url: "https://www.hkex.com.hk" },
+            { id: "EURONEXT", name: "Euronext", url: "https://www.euronext.com" },
+            { id: "FRANKFURT", name: "Frankfurt Stock Exchange", url: "https://www.boerse-frankfurt.de/en" },
+            { id: "TWSE", name: "Taiwan Stock Exchange", url: "https://www.twse.com.tw/en/" },
+            { id: "KRX", name: "Korea Exchange", url: "https://global.krx.co.kr" },
+            { id: "SET", name: "Stock Exchange of Thailand", url: "https://www.set.or.th" }
+          ];
+
+          async function crawlAll() {
+            const resultData = { last_updated: new Date().toISOString(), exchanges: {} };
+            for (const item of targets) {
+              try {
+                const res = await axios.get(item.url, { timeout: 8000, headers: { "User-Agent": "Mozilla/5.0" } });
+                resultData.exchanges[item.id] = { status: "ONLINE", http_code: res.status, url: item.url, timestamp: Date.now() };
+              } catch(e) {
+                resultData.exchanges[item.id] = { status: "OFFLINE_FALLBACK", url: item.url, timestamp: Date.now() };
+              }
+            }
+            fs.writeFileSync("market_data.json", JSON.stringify(resultData, null, 2));
+            console.log("Crawling Completed and Saved to market_data.json");
+          }
+          crawlAll();
+          '
+
+      - name: Commit and Push Updated Data
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add market_data.json
+          git commit -m "auto: Update global market data via Cloud Crawler" || exit 0
+          git push
