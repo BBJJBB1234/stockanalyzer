@@ -1,86 +1,87 @@
 {
-  "last_updated": "2026-09-12T19:10:37.492Z",
+  "last_updated": "2026-09-12T20:12:50.170Z",
   "exchanges": {
     "NYSE": {
       "status": "ONLINE",
       "http_code": 200,
       "url": "https://www.nyse.com",
-      "timestamp": 1789240237825
+      "timestamp": 1789243970498
     },
     "NASDAQ": {
       "status": "ONLINE",
       "http_code": 200,
       "url": "https://www.nasdaq.com",
-      "timestamp": 1789240241008
+      "timestamp": 1789243971869
     },
     "SSE": {
-      "status": "OFFLINE_FALLBACK",
+      "status": "ONLINE",
+      "http_code": 200,
       "url": "http://www.sse.com.cn",
-      "timestamp": 1789240242229
+      "timestamp": 1789243972528
     },
     "SZSE": {
       "status": "OFFLINE_FALLBACK",
       "url": "http://www.szse.cn",
-      "timestamp": 1789240245339
+      "timestamp": 1789243975757
     },
     "JPX": {
       "status": "ONLINE",
       "http_code": 200,
       "url": "https://www.jpx.co.jp/english/",
-      "timestamp": 1789240245683
+      "timestamp": 1789243976257
     },
     "NSE": {
       "status": "OFFLINE_FALLBACK",
       "url": "https://www.nseindia.com",
-      "timestamp": 1789240245904
+      "timestamp": 1789243976399
     },
     "BSE": {
       "status": "ONLINE",
       "http_code": 200,
       "url": "https://www.bseindia.com",
-      "timestamp": 1789240246418
+      "timestamp": 1789243976603
     },
     "LSE": {
       "status": "ONLINE",
       "http_code": 200,
       "url": "https://www.londonstockexchange.com",
-      "timestamp": 1789240247972
+      "timestamp": 1789243977652
     },
     "HKEX": {
       "status": "ONLINE",
       "http_code": 200,
       "url": "https://www.hkex.com.hk",
-      "timestamp": 1789240255063
+      "timestamp": 1789243980883
     },
     "EURONEXT": {
       "status": "ONLINE",
       "http_code": 200,
       "url": "https://www.euronext.com",
-      "timestamp": 1789240255445
+      "timestamp": 1789243981234
     },
     "FRANKFURT": {
       "status": "ONLINE",
       "http_code": 200,
       "url": "https://www.boerse-frankfurt.de/en",
-      "timestamp": 1789240258161
+      "timestamp": 1789243983787
     },
     "TWSE": {
       "status": "ONLINE",
       "http_code": 200,
       "url": "https://www.twse.com.tw/en/",
-      "timestamp": 1789240259528
+      "timestamp": 1789243984942
     },
     "KRX": {
       "status": "ONLINE",
       "http_code": 200,
       "url": "https://global.krx.co.kr",
-      "timestamp": 1789240260087
+      "timestamp": 1789243985426
     },
     "SET": {
       "status": "ONLINE",
       "http_code": 200,
       "url": "https://www.set.or.th",
-      "timestamp": 1789240262733
+      "timestamp": 1789243987928
     }
   }
 }
